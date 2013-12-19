@@ -6,18 +6,27 @@ public abstract class IShip : MonoBehaviour {
 
 	protected List<IGunTurret> guns;
 
-	protected float maxTranslation;
-	protected float maxRotation;
-	protected float magnitude;
+	public float maxTranslation;
+	public float maxRotation;
 	public Vector3 targetLocation;
+	public Texture2D shipTexture;
 	protected bool moveCommand = false;
+
+	protected int rotationDirection = 0;
 
 
 	protected abstract void InitializeShip ();
 
 	// Use this for initialization
-	void Start () {
-		this.magnitude = 0.0f;
+	protected virtual void Start () {
+		//Load texture
+		//this.texture = (Texture2D)Resources.LoadAssetAtPath ("/Assets/Resources/Images/patrolboat", typeof(Texture2D));
+		renderer.material.mainTexture = this.shipTexture;
+
+		//Set shader
+		Shader shader = Shader.Find ("Unlit/Transparent");
+		renderer.material.shader = shader;
+
 		this.InitializeShip ();
 	}
 
@@ -25,66 +34,88 @@ public abstract class IShip : MonoBehaviour {
 	protected virtual void PerformMovement()
 	{
 		Vector3 currentPos = renderer.transform.position;
+		Vector3 localCurrentPos = renderer.transform.localPosition;
+	
+		Vector3 deltaVect = this.targetLocation - currentPos;   
 
-		//Target location in der Basis vom Schiff
-		Vector3 deltaVect = this.targetLocation - currentPos;
+		float distance = deltaVect.magnitude;
 
+		float r = deltaVect.magnitude;
+		float x = deltaVect.x;
+		float y = deltaVect.y;
+		float controlOrientation = 0;
 
-		float tmpDeltaMagnitude = deltaVect.magnitude;
-		while (tmpDeltaMagnitude < 0) 
+		if (y >= 0) 
 		{
-			tmpDeltaMagnitude += 360;
+			controlOrientation = Mathf.Acos(x/r) * 180/Mathf.PI;
+		} 
+		else {
+			controlOrientation = 360 - Mathf.Acos (x/r)  * 180/Mathf.PI;
 		}
 
-		float tmpOwnMagnitude = this.magnitude;
-		while (tmpOwnMagnitude<0) 
+		float ownOrientation = renderer.transform.eulerAngles.z;
+		while (ownOrientation<0) 
 		{
-			tmpOwnMagnitude += 360;
+			ownOrientation += 360;
 		}
-		tmpOwnMagnitude %= 360;
+		ownOrientation %= 360;
 
-		float deltaAngle = tmpOwnMagnitude - tmpDeltaMagnitude;
-		while (deltaAngle < 0) 
+		float deviationOrientation = controlOrientation - ownOrientation;
+		while (deviationOrientation < 0) 
 		{
-			deltaAngle += 360;
+			deviationOrientation += 360;
 		}
-		deltaAngle %= 360;
+		deviationOrientation %= 360;
 
-		if (deltaAngle >= 0.01f) 
+		if (Mathf.Abs(deviationOrientation) >= 0.05f) 
 		{
 			float rotation = this.maxRotation;
 
-			int direction = 1;
-
-			if (Mathf.Abs (deltaAngle) < this.maxRotation)
+			if (Mathf.Abs (deviationOrientation) < this.maxRotation)
 			{
-				rotation = Mathf.Abs(deltaAngle);
-				direction = -1;
+				rotation = Mathf.Abs(deviationOrientation);
+				if (deviationOrientation <= 180)
+				{
+					this.rotationDirection = 1;
+				}
+				else
+				{
+					this.rotationDirection = -1;
+				}
 			}
 
 
-			/*if (360-deltaAngle<deltaAngle)
+			if (this.rotationDirection == 0)
 			{
-				direction = -1;
-			}*/
+				if (deviationOrientation <= 180)
+				{
+					this.rotationDirection = 1;
+				}
+				else
+				{
+					this.rotationDirection = -1;
+				}
+			}
 
-			renderer.transform.RotateAround (currentPos, new Vector3 (0, 0, 1), direction * rotation);
-			this.magnitude += direction * rotation;
+			renderer.transform.RotateAround (currentPos, new Vector3 (0, 0, 1), this.rotationDirection * rotation);
 
 		} 
-		else 
+		else
 		{
-			float distance = Mathf.Sqrt(deltaVect.x*deltaVect.x + deltaVect.y*deltaVect.y);
-			if (distance > 1) 
+			this.rotationDirection = 0;
+			/*if (distance > 0.2f) 
 			{
-				currentPos.x += this.maxTranslation*Mathf.Cos(magnitude);
-				currentPos.y += this.maxTranslation*Mathf.Sin(magnitude);
-				renderer.transform.position = currentPos;
+				//currentPos.x += this.maxTranslation;//*Mathf.Cos(magnitude);
+				//currentPos.y += this.maxTranslation;//*Mathf.Sin(magnitude);
+				//renderer.transform.localPosition = new Vector3(localCurrentPos.x + this.maxTranslation, localCurrentPos.y + this.maxTranslation, localCurrentPos.z);
+				renderer.transform.Translate(this.maxTranslation*Mathf.Cos(ownOrientation), 
+				                             this.maxTranslation*Mathf.Sin(ownOrientation), 
+				                             0);
 			} 
 			else 
 			{
 				this.moveCommand = false;
-			}
+			}*/
 		}
 	}
 

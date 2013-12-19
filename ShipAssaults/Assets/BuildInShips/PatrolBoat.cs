@@ -18,36 +18,29 @@ public class PatrolBoat : IShip {
 
 	protected override void InitializeShip ()
 	{
-		//Load texture
-		Texture2D tex = (Texture2D)Resources.LoadAssetAtPath ("Assets/Resources/Images/patrolboat", typeof(Texture2D));
-		renderer.material.mainTexture = tex;
-
-		//Set shader
-		Shader shader = Shader.Find ("Unlit/Transparent");
-		renderer.material.shader = shader;
-
+		renderer.transform.localScale = new Vector3 (1f, 0.5f, 1);
 
 		//Load Patrolboat properties
-		this.maxRotation = 0.1f;
+		this.maxRotation = 0.9f;
 		this.maxTranslation = 0.015f;
 
 		this.moveCommand = true;
-		this.targetLocation = new Vector3 (10, 10, renderer.transform.position.z);
+		this.targetLocation = new Vector3 (-2, -5, renderer.transform.position.z);
 	}
 
 	// Use this for initialization
-	void Start () {
-		this.InitializeShip ();
+	protected override void Start () {
+		base.Start ();
 	}
 
 	protected override void AnimateShipMotor()
 	{
 		Vector3 currentPos = renderer.transform.position;
 		Vector3 motorLocation = currentPos;
-		motorLocation.x -= 1*Mathf.Cos(magnitude);
-		motorLocation.y -= 1*Mathf.Sin(magnitude);
+		motorLocation.x -= 1;
+		motorLocation.y -= 1;
 
-		ParticleManager.get_instance ().instantiateParticleSystem ("SimpleSplash", motorLocation);
+		//ParticleManager.get_instance ().instantiateParticleSystem ("SimpleSplash", motorLocation);
 	}
 
 	// Update is called once per frame
