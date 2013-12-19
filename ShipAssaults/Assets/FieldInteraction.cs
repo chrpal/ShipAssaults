@@ -3,8 +3,8 @@ using System.Collections;
 
 public class FieldInteraction : MonoBehaviour {
 
-	static float movementStrength = 0.5f;
-	static float zoomLevel = 0.5f;
+	static public float movementStrength = 0.5f;
+	static public float zoomLevel = 0.5f;
 	static Camera MainCam;
 	static GameObject MainPlane;
 	static bool rightMouseDown = false;
@@ -12,8 +12,8 @@ public class FieldInteraction : MonoBehaviour {
 
 	static FieldInteraction instance = null; 
 
-	static float maxCamZoom = -15.5f;
-	static float minCamZoom = -2.0f;
+	static public float maxCamZoom = -15.5f;
+	static public float minCamZoom = -2.0f;
 
 	public static FieldInteraction get_instance()
 	{
@@ -31,7 +31,7 @@ public class FieldInteraction : MonoBehaviour {
 		MainCam = GameObject.Find ("MainCam").camera;
 		MainPlane = GameObject.Find ("MainPlane");
 		lastMousePosition = Input.mousePosition;
-		PatrolBoat.CreateShip ();
+		MiddleClassBattleShip.CreateShip ();
 	}
 	
 	// Update is called once per frame
@@ -56,7 +56,7 @@ public class FieldInteraction : MonoBehaviour {
 			if (selected)
 			{
 				//ParticleManager.get_instance().instantiateParticleSystem("SimpleSplash",new Vector3(hitPoint.x,hitPoint.y,0));
-				PatrolBoat.CreateShip(hitPoint);
+				MiddleClassBattleShip.CreateShip(hitPoint);
 			}
 		}
 

@@ -4,11 +4,13 @@ using System.Collections;
 public class PrefabManager {
 
 	protected static PrefabManager instance = null;
-	public GameObject shipQuad = null;
+	public GameObject patrolBoat = null;
+	public GameObject middleClassBattleShip = null;
 
 	protected void Initialize()
 	{
-		shipQuad = GameObject.Find ("ShipQuad");
+		patrolBoat = GameObject.Find ("PatrolBoat");
+		middleClassBattleShip = GameObject.Find ("MiddleClassBattleShip");
 	}
 
 	public GameObject InstantiatePrefab(GameObject obj, Vector3 location)

@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\BuildInShips\MiddleClassBattleShip.cs" />
      <Compile Include="Assets\BuildInShips\PatrolBoat.cs" />
      <Compile Include="Assets\CurvedMovement.cs" />
      <Compile Include="Assets\FieldInteraction.cs" />

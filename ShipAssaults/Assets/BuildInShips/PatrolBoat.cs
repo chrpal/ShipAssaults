@@ -12,20 +12,12 @@ public class PatrolBoat : IShip {
 	public static void CreateShip(Vector2 location)
 	{
 		Vector3 realLocation = new Vector3 (location.x, location.y, -0.1f);
-		GameObject ship = PrefabManager.get_instance ().InstantiatePrefab (PrefabManager.get_instance ().shipQuad, realLocation);
-		ship.AddComponent ("PatrolBoat");
+		GameObject ship = PrefabManager.get_instance ().InstantiatePrefab (PrefabManager.get_instance ().patrolBoat, realLocation);
 	}
 
 	protected override void InitializeShip ()
 	{
-		renderer.transform.localScale = new Vector3 (1f, 0.5f, 1);
-
-		//Load Patrolboat properties
-		this.maxRotation = 0.9f;
-		this.maxTranslation = 0.015f;
-
 		this.moveCommand = true;
-		this.targetLocation = new Vector3 (-2, -5, renderer.transform.position.z);
 	}
 
 	// Use this for initialization

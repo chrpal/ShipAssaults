@@ -67,13 +67,16 @@ public abstract class IShip : MonoBehaviour {
 		}
 		deviationOrientation %= 360;
 
-		if (Mathf.Abs(deviationOrientation) >= 0.05f) 
+		if (Mathf.Abs(deviationOrientation) >= 0.5f) 
 		{
 			float rotation = this.maxRotation;
 
 			if (Mathf.Abs (deviationOrientation) < this.maxRotation)
 			{
-				rotation = Mathf.Abs(deviationOrientation);
+				renderer.transform.eulerAngles = new Vector3(renderer.transform.eulerAngles.x,
+				                                             renderer.transform.eulerAngles.y,
+				                                             controlOrientation);
+				/*rotation = Mathf.Abs(deviationOrientation);
 				if (deviationOrientation <= 180)
 				{
 					this.rotationDirection = 1;
@@ -81,41 +84,40 @@ public abstract class IShip : MonoBehaviour {
 				else
 				{
 					this.rotationDirection = -1;
-				}
-			}
-
-
-			if (this.rotationDirection == 0)
+				}*/
+			} 
+			else 
 			{
-				if (deviationOrientation <= 180)
+				if (this.rotationDirection == 0)
 				{
-					this.rotationDirection = 1;
+					if (deviationOrientation <= 180)
+					{
+						this.rotationDirection = 1;
+					}
+					else
+					{
+						this.rotationDirection = -1;
+					}
 				}
-				else
-				{
-					this.rotationDirection = -1;
-				}
-			}
 
-			renderer.transform.RotateAround (currentPos, new Vector3 (0, 0, 1), this.rotationDirection * rotation);
+				renderer.transform.RotateAround (currentPos, new Vector3 (0, 0, 1), this.rotationDirection * rotation);
+			}
 
 		} 
 		else
 		{
 			this.rotationDirection = 0;
-			/*if (distance > 0.2f) 
+			if (distance > 0.2f) 
 			{
-				//currentPos.x += this.maxTranslation;//*Mathf.Cos(magnitude);
-				//currentPos.y += this.maxTranslation;//*Mathf.Sin(magnitude);
-				//renderer.transform.localPosition = new Vector3(localCurrentPos.x + this.maxTranslation, localCurrentPos.y + this.maxTranslation, localCurrentPos.z);
-				renderer.transform.Translate(this.maxTranslation*Mathf.Cos(ownOrientation), 
-				                             this.maxTranslation*Mathf.Sin(ownOrientation), 
-				                             0);
+				float ownOrientationRad = ownOrientation*Mathf.PI/180;
+				currentPos.x += this.maxTranslation*Mathf.Cos(ownOrientationRad);
+				currentPos.y += this.maxTranslation*Mathf.Sin(ownOrientationRad);
+				renderer.transform.position = currentPos;
 			} 
 			else 
 			{
 				this.moveCommand = false;
-			}*/
+			}
 		}
 	}
 
