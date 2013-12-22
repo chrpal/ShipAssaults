@@ -40,16 +40,6 @@ public abstract class IShip : MonoBehaviour {
 
 		float distance = deltaVect.magnitude;
 
-		Quaternion ownLookQuaternion = renderer.transform.rotation;
-
-		Quaternion targetLookQuaternion = Quaternion.LookRotation (targetLocation, new Vector3(1f,0,0));
-
-		//Quaternion test = Quaternion.Euler (new Vector3 (0, 0, renderer.transform.eulerAngles.z));
-
-		transform.rotation = Quaternion.Slerp (ownLookQuaternion, targetLookQuaternion, Time.time * 0.01f);
-
-		return;
-
 		float r = deltaVect.magnitude;
 		float x = deltaVect.x;
 		float y = deltaVect.y;
@@ -77,7 +67,7 @@ public abstract class IShip : MonoBehaviour {
 		}
 		deviationOrientation %= 360;
 
-		if (Mathf.Abs(deviationOrientation) >= 0.5f) 
+		if (Mathf.Abs(deviationOrientation) != 0.0f) 
 		{
 			float rotation = this.maxRotation;
 
@@ -86,15 +76,6 @@ public abstract class IShip : MonoBehaviour {
 				renderer.transform.eulerAngles = new Vector3(renderer.transform.eulerAngles.x,
 				                                             renderer.transform.eulerAngles.y,
 				                                             controlOrientation);
-				/*rotation = Mathf.Abs(deviationOrientation);
-				if (deviationOrientation <= 180)
-				{
-					this.rotationDirection = 1;
-				}
-				else
-				{
-					this.rotationDirection = -1;
-				}*/
 			} 
 			else 
 			{
@@ -117,7 +98,7 @@ public abstract class IShip : MonoBehaviour {
 		else
 		{
 			this.rotationDirection = 0;
-			if (distance > 0.2f) 
+			if (distance > this.maxTranslation) 
 			{
 				float ownOrientationRad = ownOrientation*Mathf.PI/180;
 				currentPos.x += this.maxTranslation*Mathf.Cos(ownOrientationRad);

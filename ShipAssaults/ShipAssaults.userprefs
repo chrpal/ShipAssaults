@@ -1,17 +1,22 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\ShipFactory\IShip.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\BuildInShips\MiddleClassBattleShip.cs">
     <Files>
+      <File FileName="Assets\ShipFactory\IShip.cs" Line="100" Column="4" />
       <File FileName="Assets\BuildInShips\PatrolBoat.cs" Line="1" Column="1" />
-      <File FileName="Assets\ShipFactory\IShip.cs" Line="45" Column="45" />
-      <File FileName="Assets\Manager\PrefabManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\BuildInShips\MiddleClassBattleShip.cs" Line="1" Column="1" />
-      <File FileName="Assets\FieldInteraction.cs" Line="1" Column="1" />
+      <File FileName="Assets\ShipFactory\IShip.cs" Line="126" Column="1" />
+      <File FileName="Assets\Manager\PrefabManager.cs" Line="19" Column="20" />
+      <File FileName="Assets\BuildInShips\MiddleClassBattleShip.cs" Line="8" Column="39" />
+      <File FileName="Assets\FieldInteraction.cs" Line="34" Column="32" />
       <File FileName="Assets\CurvedMovement.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="D:\Daten\Users\Pallasch.Christoph\Documents\GitHub\ShipAssaults\ShipAssaults\Assets\ShipFactory\IShip.cs" line="76" />
+      <Breakpoint file="D:\Daten\Users\Pallasch.Christoph\Documents\GitHub\ShipAssaults\ShipAssaults\Assets\ShipFactory\IShip.cs" line="100" />
+      <Breakpoint file="D:\Daten\Users\Pallasch.Christoph\Documents\GitHub\ShipAssaults\ShipAssaults\Assets\Manager\PrefabManager.cs" line="18" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

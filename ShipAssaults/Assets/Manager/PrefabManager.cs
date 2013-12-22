@@ -9,8 +9,8 @@ public class PrefabManager {
 
 	protected void Initialize()
 	{
-		patrolBoat = GameObject.Find ("PatrolBoat");
-		middleClassBattleShip = GameObject.Find ("MiddleClassBattleShip");
+		patrolBoat = Resources.Load<GameObject> ("Prefabs/PatrolBoat");
+		middleClassBattleShip = Resources.Load<GameObject> ("Prefabs/MiddleClassBattleShip");
 	}
 
 	public GameObject InstantiatePrefab(GameObject obj, Vector3 location)
