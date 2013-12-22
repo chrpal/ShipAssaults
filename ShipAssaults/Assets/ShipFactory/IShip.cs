@@ -40,6 +40,16 @@ public abstract class IShip : MonoBehaviour {
 
 		float distance = deltaVect.magnitude;
 
+		Quaternion ownLookQuaternion = renderer.transform.rotation;
+
+		Quaternion targetLookQuaternion = Quaternion.LookRotation (targetLocation, new Vector3(1f,0,0));
+
+		//Quaternion test = Quaternion.Euler (new Vector3 (0, 0, renderer.transform.eulerAngles.z));
+
+		transform.rotation = Quaternion.Slerp (ownLookQuaternion, targetLookQuaternion, Time.time * 0.01f);
+
+		return;
+
 		float r = deltaVect.magnitude;
 		float x = deltaVect.x;
 		float y = deltaVect.y;
