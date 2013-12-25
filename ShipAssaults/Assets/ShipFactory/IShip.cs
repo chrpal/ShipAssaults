@@ -5,15 +5,15 @@ using System.Collections.Generic;
 public abstract class IShip : MonoBehaviour {
 
 	protected List<IGunTurret> guns;
-
+	protected string identifier = "";
 	public float maxTranslation;
-	public float maxRotation;
+	public float rotationSpeed = 1;
 	public Vector3 targetLocation;
 	public Texture2D shipTexture;
 	protected bool moveCommand = false;
 
 	protected int rotationDirection = 0;
-
+	protected float lastDistance = 0.0f;
 
 	protected abstract void InitializeShip ();
 
@@ -27,6 +27,13 @@ public abstract class IShip : MonoBehaviour {
 		Shader shader = Shader.Find ("Unlit/Transparent");
 		renderer.material.shader = shader;
 
+		Random.seed = Mathf.FloorToInt (Time.realtimeSinceStartup);
+		for (int i=0; i < 12; i++) 
+		{
+			int number = Random.Range(0, 9);
+			this.identifier += number.ToString();
+		}
+
 		this.InitializeShip ();
 	}
 
@@ -34,82 +41,69 @@ public abstract class IShip : MonoBehaviour {
 	protected virtual void PerformMovement()
 	{
 		Vector3 currentPos = renderer.transform.position;
-		Vector3 localCurrentPos = renderer.transform.localPosition;
 	
-		Vector3 deltaVect = this.targetLocation - currentPos;   
+		Vector3 deltaVect = this.targetLocation - currentPos;
+		deltaVect = new Vector3 (deltaVect.x, deltaVect.y, 0);
 
 		float distance = deltaVect.magnitude;
 
-		float r = deltaVect.magnitude;
-		float x = deltaVect.x;
-		float y = deltaVect.y;
-		float controlOrientation = 0;
-
-		if (y >= 0) 
+		if (this.rotationDirection == 0) 
 		{
-			controlOrientation = Mathf.Acos(x/r) * 180/Mathf.PI;
-		} 
-		else {
-			controlOrientation = 360 - Mathf.Acos (x/r)  * 180/Mathf.PI;
-		}
-
-		float ownOrientation = renderer.transform.eulerAngles.z;
-		while (ownOrientation<0) 
-		{
-			ownOrientation += 360;
-		}
-		ownOrientation %= 360;
-
-		float deviationOrientation = controlOrientation - ownOrientation;
-		while (deviationOrientation < 0) 
-		{
-			deviationOrientation += 360;
-		}
-		deviationOrientation %= 360;
-
-		if (Mathf.Abs(deviationOrientation) != 0.0f) 
-		{
-			float rotation = this.maxRotation;
-
-			if (Mathf.Abs (deviationOrientation) < this.maxRotation)
+			if (deltaVect.y >= 0)
 			{
-				renderer.transform.eulerAngles = new Vector3(renderer.transform.eulerAngles.x,
-				                                             renderer.transform.eulerAngles.y,
-				                                             controlOrientation);
-			} 
-			else 
+				this.rotationDirection = 1;
+			}
+			else
 			{
-				if (this.rotationDirection == 0)
-				{
-					if (deviationOrientation <= 180)
-					{
-						this.rotationDirection = 1;
-					}
-					else
-					{
-						this.rotationDirection = -1;
-					}
-				}
+				this.rotationDirection = -1;
+			}
+		}
 
-				renderer.transform.RotateAround (currentPos, new Vector3 (0, 0, 1), this.rotationDirection * rotation);
+		float angleDeviation = Vector3.Angle (transform.right, deltaVect);
+
+		if (Mathf.Abs (angleDeviation) > 1.0f)
+		{
+			Vector3 newOrientation = new Vector3(0,
+			                                     0,
+			                                     this.rotationDirection * this.rotationSpeed + transform.eulerAngles.z);
+			transform.eulerAngles = newOrientation;
+		}
+		/*else
+		{*/
+
+			float angleDeviationRatio = angleDeviation / 180;
+			float deltaDistanceRatio = Mathf.Abs(lastDistance - distance)/distance;
+			float speedCorrectionCoefficient = 1.0f;
+			if (deltaDistanceRatio == 0) 
+			{
+				speedCorrectionCoefficient = 0.01f;
 			}
 
-		} 
-		else
-		{
-			this.rotationDirection = 0;
-			if (distance > this.maxTranslation) 
+			float speedCoefficient = (1 - angleDeviationRatio);
+
+			float speed = this.maxTranslation;
+		speed = deltaDistanceRatio * speedCoefficient * speed;
+
+			lastDistance = distance;
+
+			if (distance < speed)
 			{
-				float ownOrientationRad = ownOrientation*Mathf.PI/180;
-				currentPos.x += this.maxTranslation*Mathf.Cos(ownOrientationRad);
-				currentPos.y += this.maxTranslation*Mathf.Sin(ownOrientationRad);
+				speed = distance;
+			}
+
+			if (distance >= 0.05f) 
+			{
+				float ownOrientationRad = transform.eulerAngles.z*Mathf.PI/180;
+				currentPos.x += speed*Mathf.Cos(ownOrientationRad);
+				currentPos.y += speed*Mathf.Sin(ownOrientationRad);
 				renderer.transform.position = currentPos;
 			} 
 			else 
 			{
+				Debug.Log("Translation ready!");
 				this.moveCommand = false;
 			}
-		}
+		//}
 	}
 
 	protected abstract void AnimateShipMotor();

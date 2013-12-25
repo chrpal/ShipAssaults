@@ -31,7 +31,6 @@ public class FieldInteraction : MonoBehaviour {
 		MainCam = GameObject.Find ("MainCam").camera;
 		MainPlane = GameObject.Find ("MainPlane");
 		lastMousePosition = Input.mousePosition;
-		MiddleClassBattleShip.CreateShip ();
 	}
 	
 	// Update is called once per frame
@@ -49,7 +48,7 @@ public class FieldInteraction : MonoBehaviour {
 		rightMouseDown = Input.GetMouseButton (1);
 		Vector3 deltaMouse = lastMousePosition - Input.mousePosition;
 
-		if (Input.GetMouseButton (0)) 
+		if (Input.GetMouseButtonDown (0)) 
 		{
 			Vector3 hitPoint;
 			bool selected = ObjectSelected(MainPlane,out hitPoint);
