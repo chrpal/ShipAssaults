@@ -6,7 +6,7 @@ public abstract class IShip : MonoBehaviour {
 
 	protected List<IGunTurret> guns;
 	protected string identifier = "";
-	public float maxTranslation;
+	public float translationSpeed = 1;
 	public float rotationSpeed = 1;
 	public Vector3 targetLocation;
 	public Texture2D shipTexture;
@@ -68,21 +68,22 @@ public abstract class IShip : MonoBehaviour {
 			                                     this.rotationDirection * this.rotationSpeed + transform.eulerAngles.z);
 			transform.eulerAngles = newOrientation;
 		}
-		/*else
-		{*/
 
 			float angleDeviationRatio = angleDeviation / 180;
-			float deltaDistanceRatio = Mathf.Abs(lastDistance - distance)/distance;
-			float speedCorrectionCoefficient = 1.0f;
-			if (deltaDistanceRatio == 0) 
-			{
-				speedCorrectionCoefficient = 0.01f;
-			}
-
 			float speedCoefficient = (1 - angleDeviationRatio);
 
-			float speed = this.maxTranslation;
-		speed = speedCoefficient * speed;
+			float deltaDist = lastDistance - distance;
+			float v = (distance - lastDistance)/Time.deltaTime;
+
+			Debug.Log (v);
+
+			float speed = this.translationSpeed;
+			speed = speedCoefficient * speed;
+
+			if (speed > this.translationSpeed)
+			{
+				speed = this.translationSpeed;
+			}
 
 			lastDistance = distance;
 
@@ -100,10 +101,10 @@ public abstract class IShip : MonoBehaviour {
 			} 
 			else 
 			{
-				Debug.Log("Translation ready!");
 				this.moveCommand = false;
+				this.rotationDirection = 0;
+				this.lastDistance = 0;
 			}
-		//}
 	}
 
 	protected abstract void AnimateShipMotor();
