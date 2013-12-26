@@ -1,0 +1,121 @@
+fileFormatVersion: 2
+guid: a43babf6a65169244b8541ef0d50b554
+TextureImporter:
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: 1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: iPhone
+    maxTextureSize: 1024
+    textureFormat: -2
+    compressionQuality: 50
+  spriteSheet:
+    sprites:
+    - name: Battleship HARUNA-Component2_0
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 359
+        width: 2779
+        height: 391
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: Battleship HARUNA-Component2_1
+      rect:
+        serializedVersion: 2
+        x: 753
+        y: 96
+        width: 280
+        height: 118
+      alignment: 9
+      pivot: {x: .66896385, y: .511455357}
+    - name: Battleship HARUNA-Component2_2
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 98
+        width: 279
+        height: 117
+      alignment: 9
+      pivot: {x: .664724469, y: .500000656}
+    - name: Battleship HARUNA-Component2_3
+      rect:
+        serializedVersion: 2
+        x: 1580
+        y: 95
+        width: 279
+        height: 122
+      alignment: 9
+      pivot: {x: .32138148, y: .500000238}
+    - name: Battleship HARUNA-Component2_4
+      rect:
+        serializedVersion: 2
+        x: 1057
+        y: 945
+        width: 52
+        height: 76
+      alignment: 9
+      pivot: {x: .488659203, y: .686191738}
+    - name: Battleship HARUNA-Component2_5
+      rect:
+        serializedVersion: 2
+        x: 884
+        y: 793
+        width: 14
+        height: 44
+      alignment: 9
+      pivot: {x: .521876752, y: .653127491}
+    - name: Battleship HARUNA-Component2_6
+      rect:
+        serializedVersion: 2
+        x: 881
+        y: 1043
+        width: 17
+        height: 43
+      alignment: 9
+      pivot: {x: .572423577, y: .422289461}
+    - name: Battleship HARUNA-Component2_7
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 1231
+        width: 53
+        height: 73
+      alignment: 9
+      pivot: {x: .514072657, y: .392725289}
+  spritePackingTag: 
+  userData: 
