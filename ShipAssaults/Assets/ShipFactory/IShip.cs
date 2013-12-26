@@ -82,7 +82,7 @@ public abstract class IShip : MonoBehaviour {
 			float speedCoefficient = (1 - angleDeviationRatio);
 
 			float speed = this.maxTranslation;
-		speed = deltaDistanceRatio * speedCoefficient * speed;
+		speed = speedCoefficient * speed;
 
 			lastDistance = distance;
 
