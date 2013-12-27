@@ -13,10 +13,19 @@ public abstract class IShip : MonoBehaviour {
 	protected bool moveCommand = false;
 	
 	protected int rotationDirection = 0;
-	protected float lastDistance = 0.0f;
 	
 	protected abstract void InitializeShip ();
-	
+
+	protected virtual void generateID()
+	{
+		Random.seed = Mathf.FloorToInt (Time.realtimeSinceStartup);
+		for (int i=0; i < 12; i++) 
+		{
+			int number = Random.Range(0, 9);
+			this.identifier += number.ToString();
+		}
+	}
+
 	// Use this for initialization
 	protected virtual void Start () {
 		//Load texture
@@ -26,14 +35,9 @@ public abstract class IShip : MonoBehaviour {
 		//Set shader
 		Shader shader = Shader.Find ("Unlit/Transparent");
 		renderer.material.shader = shader;
-		
-		Random.seed = Mathf.FloorToInt (Time.realtimeSinceStartup);
-		for (int i=0; i < 12; i++) 
-		{
-			int number = Random.Range(0, 9);
-			this.identifier += number.ToString();
-		}
-		
+
+		this.generateID ();
+
 		this.InitializeShip ();
 	}
 	
@@ -70,18 +74,20 @@ public abstract class IShip : MonoBehaviour {
 		}
 		
 		float angleDeviationRatio = angleDeviation / 180;
-		float speedCoefficient = (1 - angleDeviationRatio);
+		float angleDistanceSquaredRatio = (angleDeviationRatio*angleDeviationRatio)/(distance*distance);
+
+		float speedCoefficient = (1 - angleDeviationRatio) * (1-angleDistanceSquaredRatio);
+
+		if (speedCoefficient > 1) 
+		{
+			speedCoefficient = 1.0f;
+		}
 		
 		float speed = this.translationSpeed;
 		speed = speedCoefficient * speed;
-		
-		if (speed > this.translationSpeed)
-		{
-			speed = this.translationSpeed;
-		}
-		
-		lastDistance = distance;
-		
+
+		float speedRatio = speed / this.translationSpeed;
+
 		if (distance < speed)
 		{
 			speed = distance;
@@ -98,7 +104,6 @@ public abstract class IShip : MonoBehaviour {
 		{
 			this.moveCommand = false;
 			this.rotationDirection = 0;
-			this.lastDistance = 0;
 		}
 	}
 	
