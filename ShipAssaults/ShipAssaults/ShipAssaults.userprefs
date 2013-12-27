@@ -3,7 +3,12 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/ShipFactory/IGunTurret.cs">
     <Files>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <File FileName="Assets/ShipFactory/IGunTurret.cs" Line="35" Column="2" />
+=======
+      <File FileName="Assets\ShipFactory\IShip.cs" Line="86" Column="28" />
+      <File FileName="Assets\FieldInteraction.cs" Line="1" Column="1" />
+>>>>>>> 5a4319cf2a531104e71c736fc727f2854a221137
 =======
       <File FileName="Assets\ShipFactory\IShip.cs" Line="86" Column="28" />
       <File FileName="Assets\FieldInteraction.cs" Line="1" Column="1" />
