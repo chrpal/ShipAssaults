@@ -31,7 +31,7 @@ public class FieldInteraction : MonoBehaviour {
 		MainCam = GameObject.Find ("MainCam").camera;
 		MainPlane = GameObject.Find ("MainPlane");
 		lastMousePosition = Input.mousePosition;
-		MiddleClassBattleShip.CreateShip ();
+		//MiddleClassBattleShip.CreateShip ();
 	}
 	
 	// Update is called once per frame
