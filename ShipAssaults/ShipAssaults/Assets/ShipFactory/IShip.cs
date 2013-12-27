@@ -81,6 +81,9 @@ public abstract class IShip : MonoBehaviour {
 		if (speedCoefficient > 1) 
 		{
 			speedCoefficient = 1.0f;
+		} else if (speedCoefficient < 0) 
+		{
+			speedCoefficient = 0.0f;
 		}
 		
 		float speed = this.translationSpeed;
