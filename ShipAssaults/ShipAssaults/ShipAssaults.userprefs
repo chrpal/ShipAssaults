@@ -1,8 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/ShipFactory/IGunTurret.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/BuildInShips/FireControlSystem.cs">
     <Files>
-      <File FileName="Assets/ShipFactory/IGunTurret.cs" Line="33" Column="2" />
+      <File FileName="Assets/BuildInShips/FireControlSystem.cs" Line="14" Column="27" />
+      <File FileName="Assets/ShipFactory/IGunTurret.cs" Line="112" Column="8" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

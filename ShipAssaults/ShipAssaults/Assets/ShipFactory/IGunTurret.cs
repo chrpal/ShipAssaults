@@ -20,6 +20,7 @@ public class IGunTurret : MonoBehaviour {
 	private Vector3 fireDirection;
 	private Quaternion lookRotation;
 	private Quaternion startRotaton;
+	private Quaternion rotation;
 	public float firePower=50;
     
 	private  float[] currentTimes;
@@ -28,13 +29,37 @@ public class IGunTurret : MonoBehaviour {
 	void Start () {
 		//this.startRotaton=transform.rotation;
 		currentTimes=new float[projectileSpawnPoints.Length];
+		this.startRotaton=this.transform.rotation;
 	}
 
+	public void setProjectileTypes(GameObject[] newProjectileTypes) {
+		this.usedProjectileTypes=newProjectileTypes;
+	}
 
+	public void setFirePower(float newFirePower) {
+		this.firePower=newFirePower;
+	}
 
 	public void setTarget(Vector3 newTarget) {
 		target=newTarget;
 
+	}
+
+
+	public void setFireRange(float newFireRange) {
+		this.fireRange=newFireRange;
+	}
+
+	public void setFieldOfViewRadius(float newFieldOfViewRadius){
+		this.fieldOfViewRadius=newFieldOfViewRadius;
+	}
+
+	public void setTurnSpeed(float newTurnSpeed){
+		this.turnSpeed=newTurnSpeed;
+	}
+
+	public void setFireRate(float newFireRate) {
+		this.fireRate=newFireRate;
 	}
 
 	 
@@ -82,9 +107,9 @@ public class IGunTurret : MonoBehaviour {
 
 			if (fireDirection.magnitude>fieldOfViewRadius) {
 
-				lookRotation = Quaternion.AngleAxis(0,new Vector3(0,0,1)); // Quaternion.FromToRotation (transform.right,cannonStartAxis);
-				transform.localRotation = Quaternion.Lerp(transform.localRotation, lookRotation, turnSpeed*Time.deltaTime);
-			
+				//lookRotation = Quaternion.AngleAxis(0,new Vector3(0,0,1)); // Quaternion.FromToRotation (transform.right,cannonStartAxis);
+				transform.localRotation = Quaternion.Lerp(transform.localRotation, this.startRotaton, turnSpeed*Time.deltaTime);
+			    
 				Debug.DrawRay(transform.position,transform.right,Color.red);
 
 				Debug.DrawRay(transform.position,cannonStartAxis,Color.green);
