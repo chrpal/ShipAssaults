@@ -6,21 +6,22 @@ public class IGunTurret : MonoBehaviour {
 
 	public float angle;
 
-	public GameObject [] usedProjectileTypes;
+	public GameObject [] projectileTypes;
 	public Transform [] projectileSpawnPoints;
-	//public float ammo;
+	public int usedAmmunition=0;
+
+
 	public float fieldOfViewRadius=30;
 	public float fireRange;
 	public float fireRate;
-	public Vector3 cannonStartAxis= new Vector3(1,0,0);
 	public float turnSpeed=1;
 
 
+	private Vector3 cannonStartAxis= new Vector3(1,0,0);
 	private Vector3 target;
 	private Vector3 fireDirection;
 	private Quaternion lookRotation;
 	private Quaternion startRotaton;
-	private Quaternion rotation;
 	public float firePower=50;
     
 	private  float[] currentTimes;
@@ -30,10 +31,20 @@ public class IGunTurret : MonoBehaviour {
 		//this.startRotaton=transform.rotation;
 		currentTimes=new float[projectileSpawnPoints.Length];
 		this.startRotaton=this.transform.rotation;
+
+	}
+
+
+	public int getProjectileTypesSize() {
+		return this.projectileTypes.Length;
+	}
+
+	public void setUsedAmmunition(int newUsedAmmiunition) {
+		usedAmmunition=newUsedAmmiunition;
 	}
 
 	public void setProjectileTypes(GameObject[] newProjectileTypes) {
-		this.usedProjectileTypes=newProjectileTypes;
+		this.projectileTypes=newProjectileTypes;
 	}
 
 	public void setFirePower(float newFirePower) {
@@ -77,8 +88,8 @@ public class IGunTurret : MonoBehaviour {
 			    Debug.Log("fire");
 
 			    if(currentTimes[i]>this.fireRate+Random.value){
-				  GameObject projectile= (GameObject) Object.Instantiate(usedProjectileTypes[0],projectileSpawnPoints[i].position,Quaternion.identity);
-			      projectile.rigidbody.AddForce(-transform.right*firePower,ForceMode.Impulse);
+				GameObject projectile= (GameObject) Object.Instantiate(projectileTypes[usedAmmunition],projectileSpawnPoints[i].position,Quaternion.identity);
+			      projectile.rigidbody.AddForce(-transform.right+new Vector3(0,0,-0.01f)*firePower,ForceMode.Impulse);
 				  currentTimes[i]=0;
 			    }
 
@@ -93,7 +104,7 @@ public class IGunTurret : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
+		//Debug.DrawRay(this.transform.position,transform.right,Color.yellow);
 
 		if(this.target!=null) {
 

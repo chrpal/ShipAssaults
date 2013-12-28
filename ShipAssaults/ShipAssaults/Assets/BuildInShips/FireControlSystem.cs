@@ -24,6 +24,15 @@ public class FireControlSystem : MonoBehaviour {
 		this.setFireRange(this.fireRange);
 		this.setFirePower(this.firePower);
 		this.setProjectileTypes(projectileTypes);
+		this.setUsedAmmunition(1);
+	}
+
+	void setUsedAmmunition(int newAmmunition) {
+		foreach(IGunTurret turrent in turrents) {
+			if(turrent.getProjectileTypesSize()>newAmmunition){
+			   turrent.setUsedAmmunition(newAmmunition);
+			}
+		}
 	}
 
 
