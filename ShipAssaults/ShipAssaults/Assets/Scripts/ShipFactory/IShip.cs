@@ -16,6 +16,19 @@ public abstract class IShip : MonoBehaviour {
 	
 	protected abstract void InitializeShip ();
 
+	public static GameObject CreateShip(string name)
+	{
+		Vector2 location = new Vector2(0,0);
+		return CreateShip (name, location);
+	}
+	
+	public static GameObject CreateShip(string name, Vector2 location)
+	{
+		Vector3 realLocation = new Vector3 (location.x, location.y, -0.1f);
+		GameObject result = PrefabManager.get_instance ().InstantiatePrefab (name, realLocation);
+		return result;
+	}
+
 	protected virtual void generateID()
 	{
 		Random.seed = Mathf.FloorToInt (Time.realtimeSinceStartup);
