@@ -89,7 +89,7 @@ public class IGunTurret : MonoBehaviour {
 
 			    if(currentTimes[i]>this.fireRate+Random.value){
 				GameObject projectile= (GameObject) Object.Instantiate(projectileTypes[usedAmmunition],projectileSpawnPoints[i].position,Quaternion.identity);
-			      projectile.rigidbody.AddForce(-transform.right+new Vector3(0,0,-0.01f)*firePower,ForceMode.Impulse);
+			      projectile.rigidbody.AddForce(-transform.right*firePower,ForceMode.Impulse);
 				  currentTimes[i]=0;
 			    }
 

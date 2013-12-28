@@ -24,7 +24,7 @@ public class FireControlSystem : MonoBehaviour {
 		this.setFireRange(this.fireRange);
 		this.setFirePower(this.firePower);
 		this.setProjectileTypes(projectileTypes);
-		this.setUsedAmmunition(1);
+		this.setUsedAmmunition(0);
 	}
 
 	void setUsedAmmunition(int newAmmunition) {
