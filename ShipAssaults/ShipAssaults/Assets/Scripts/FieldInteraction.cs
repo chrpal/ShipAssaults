@@ -31,7 +31,6 @@ public class FieldInteraction : MonoBehaviour {
 		MainCam = GameObject.Find ("MainCam").camera;
 		MainPlane = GameObject.Find ("MainPlane");
 		lastMousePosition = Input.mousePosition;
-		//MiddleClassBattleShip.CreateShip ();
 	}
 	
 	// Update is called once per frame
@@ -56,7 +55,7 @@ public class FieldInteraction : MonoBehaviour {
 			if (selected)
 			{
 				//ParticleManager.get_instance().instantiateParticleSystem("SimpleSplash",new Vector3(hitPoint.x,hitPoint.y,0));
-				MiddleClassBattleShip.CreateShip(hitPoint);
+				PrefabManager.get_instance().InstantiatePrefab("MiddleClassBattleShip",hitPoint);
 			}
 		}
 
