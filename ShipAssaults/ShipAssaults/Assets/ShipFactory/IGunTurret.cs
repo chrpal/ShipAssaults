@@ -5,7 +5,7 @@ public class IGunTurret : MonoBehaviour {
 
 
 	public float angle;
-	public Vector3 target;
+
 	public GameObject [] usedProjectileTypes;
 	public Transform [] projectileSpawnPoints;
 	//public float ammo;
@@ -15,22 +15,26 @@ public class IGunTurret : MonoBehaviour {
 	public Vector3 cannonStartAxis= new Vector3(1,0,0);
 	public float turnSpeed=1;
 
+
+	private Vector3 target;
 	private Vector3 fireDirection;
 	private Quaternion lookRotation;
 	private Quaternion startRotaton;
-	private bool test=false;
 	public float firePower=50;
-	private float currentTime;
+    
+	private  float[] currentTimes;
 
 	// Use this for initialization
 	void Start () {
 		//this.startRotaton=transform.rotation;
+		currentTimes=new float[projectileSpawnPoints.Length];
 	}
 
 
 
 	public void setTarget(Vector3 newTarget) {
 		target=newTarget;
+
 	}
 
 	 
@@ -38,17 +42,20 @@ public class IGunTurret : MonoBehaviour {
 		//Debug.Log("Hallo");
 		Debug.Log(projectileSpawnPoints.Length+" nuzzels");
 
-		currentTime+=Time.deltaTime;
 
-		if(currentTime>this.fireRate){
 
-		foreach(Transform pos in projectileSpawnPoints) {
-			Debug.Log("fire");
-			GameObject projectile= (GameObject) Object.Instantiate(usedProjectileTypes[0],pos.position,Quaternion.identity);
-			projectile.rigidbody.AddForce(-transform.right*firePower,ForceMode.Impulse);
-				}
 
-			currentTime=0;
+
+			for(int i=0;i<projectileSpawnPoints.Length;i++){
+		
+				currentTimes[i]+=Time.deltaTime;
+			    Debug.Log("fire");
+
+			    if(currentTimes[i]>this.fireRate+Random.value){
+				  GameObject projectile= (GameObject) Object.Instantiate(usedProjectileTypes[0],projectileSpawnPoints[i].position,Quaternion.identity);
+			      projectile.rigidbody.AddForce(-transform.right*firePower,ForceMode.Impulse);
+				  currentTimes[i]=0;
+			    }
 
 		}
 
