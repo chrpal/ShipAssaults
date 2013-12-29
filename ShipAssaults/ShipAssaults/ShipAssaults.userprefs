@@ -1,11 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Manager\PrefabManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\FieldInteraction.cs">
     <Files>
-      <File FileName="Assets\Scripts\ShipFactory\IShip.cs" Line="25" Column="67" />
-      <File FileName="d:\Daten\Users\Pallasch.Christoph\Documents\GitHub\ShipAssaults\ShipAssaults\ShipAssaults\Assets\Scripts\FieldInteraction.cs" Line="30" Column="17" />
-      <File FileName="Assets\Scripts\Manager\PrefabManager.cs" Line="16" Column="3" />
-      <File FileName="d:\Daten\Users\Pallasch.Christoph\Documents\GitHub\ShipAssaults\ShipAssaults\ShipAssaults\Assets\Scripts\BuildInShips\PatrolBoat.cs" Line="7" Column="3" />
+      <File FileName="Assets\Scripts\ShipRelated\IGunTurret.cs" Line="63" Column="20" />
+      <File FileName="Assets\Scripts\ShipRelated\Ammunition.cs" Line="60" Column="19" />
+      <File FileName="Assets\Scripts\ShipRelated\FireControlSystem.cs" Line="69" Column="3" />
+      <File FileName="Assets\Scripts\FieldInteraction.cs" Line="85" Column="22" />
+      <File FileName="Assets\Scripts\ShipRelated\IShip.cs" Line="44" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

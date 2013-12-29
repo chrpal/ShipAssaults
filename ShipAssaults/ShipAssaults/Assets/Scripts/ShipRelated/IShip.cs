@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public abstract class IShip : MonoBehaviour {
 	
-	protected List<IGunTurret> guns;
+	public FireControlSystem fireControlSystem = null;
 	protected string identifier = "";
 	public float translationSpeed = 1;
 	public float rotationSpeed = 1;
@@ -41,6 +41,7 @@ public abstract class IShip : MonoBehaviour {
 
 	// Use this for initialization
 	protected virtual void Start () {
+
 		//Load texture
 		//this.texture = (Texture2D)Resources.LoadAssetAtPath ("/Assets/Resources/Images/patrolboat", typeof(Texture2D));
 		renderer.material.mainTexture = this.shipTexture;

@@ -6,7 +6,9 @@ public class IGunTurret : MonoBehaviour {
 
 	public float angle;
 
-	public GameObject [] projectileTypes;
+	public GameObject [] ammunitionTypes;
+	public GameObject[] projectileTypes;
+	
 	public Transform [] projectileSpawnPoints;
 	public int usedAmmunition=0;
 
@@ -23,6 +25,8 @@ public class IGunTurret : MonoBehaviour {
 	private Quaternion lookRotation;
 	private Quaternion startRotaton;
 	public float firePower=50;
+
+	public bool validTarget = false;
     
 	private  float[] currentTimes;
 
@@ -47,13 +51,21 @@ public class IGunTurret : MonoBehaviour {
 		this.projectileTypes=newProjectileTypes;
 	}
 
+	public void setAmmunitionTypes(GameObject[] newAmmunitionTypes) {
+		this.ammunitionTypes = newAmmunitionTypes;
+	}
+
 	public void setFirePower(float newFirePower) {
 		this.firePower=newFirePower;
 	}
 
 	public void setTarget(Vector3 newTarget) {
 		target=newTarget;
+		this.validTarget = true;
+	}
 
+	public void unsetTarget() {
+		this.validTarget = false;
 	}
 
 
@@ -74,23 +86,22 @@ public class IGunTurret : MonoBehaviour {
 	}
 
 	 
-	void fire() {
-		//Debug.Log("Hallo");
-		Debug.Log(projectileSpawnPoints.Length+" nuzzels");
-
-
-
-
-
+	void Fire() {
 			for(int i=0;i<projectileSpawnPoints.Length;i++){
 		
 				currentTimes[i]+=Time.deltaTime;
-			    Debug.Log("fire");
-
 			    if(currentTimes[i]>this.fireRate+Random.value){
-				GameObject projectile= (GameObject) Object.Instantiate(projectileTypes[usedAmmunition],projectileSpawnPoints[i].position,Quaternion.identity);
-			      projectile.rigidbody.AddForce(-transform.right*firePower,ForceMode.Impulse);
-				  currentTimes[i]=0;
+
+				GameObject ammoTemplate = this.ammunitionTypes[this.usedAmmunition];
+				GameObject ammoObj = PrefabManager.get_instance().InstantiatePrefab(ammoTemplate,projectileSpawnPoints[i].position);
+				Ammunition ammo = (Ammunition)ammoObj.GetComponent<Ammunition>();
+				ammo.targetPosition = this.target;
+				ammo.targetDirection = -transform.right;
+				ammo.targetDistance = Vector3.Distance(transform.position,this.target);
+
+				ammo.Fire();
+
+      			  currentTimes[i]=0;
 			    }
 
 		}
@@ -104,19 +115,13 @@ public class IGunTurret : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		//Debug.DrawRay(this.transform.position,transform.right,Color.yellow);
-
-		if(this.target!=null) {
-
-
-
 			fireDirection = (target - transform.position);
 			fireDirection.z = 0.0f;
 			//Debug.DrawRay(transform.position,fireDirection,Color.red);
 			//Debug.DrawRay(transform.position,-transform.right,Color.red);
 
 
-			if (fireDirection.magnitude>fieldOfViewRadius) {
+			if (fireDirection.magnitude>fieldOfViewRadius || this.validTarget == false) {
 
 				//lookRotation = Quaternion.AngleAxis(0,new Vector3(0,0,1)); // Quaternion.FromToRotation (transform.right,cannonStartAxis);
 				transform.localRotation = Quaternion.Lerp(transform.localRotation, this.startRotaton, turnSpeed*Time.deltaTime);
@@ -134,14 +139,9 @@ public class IGunTurret : MonoBehaviour {
 				Debug.DrawRay(transform.position,-fireDirection,Color.green);
 
 				if(fireDirection.magnitude<fireRange) {
-					this.fire();
+					this.Fire();
 				}
 
 			}
-
-
-			//transform.localRotation = Quaternion.Slerp(transform.localRotation, lookRotation, Time.deltaTime*turnSpeed );
-		}
-	
 	}
 }

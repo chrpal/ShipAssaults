@@ -46,15 +46,17 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\BuildInShips\FireControlSystem.cs" />
      <Compile Include="Assets\Scripts\BuildInShips\MiddleClassBattleShip.cs" />
      <Compile Include="Assets\Scripts\BuildInShips\PatrolBoat.cs" />
      <Compile Include="Assets\Scripts\FieldInteraction.cs" />
      <Compile Include="Assets\Scripts\Manager\ParticleManager.cs" />
      <Compile Include="Assets\Scripts\Manager\ParticleSystemsManager.cs" />
      <Compile Include="Assets\Scripts\Manager\PrefabManager.cs" />
-     <Compile Include="Assets\Scripts\ShipFactory\IGunTurret.cs" />
-     <Compile Include="Assets\Scripts\ShipFactory\IShip.cs" />
+     <Compile Include="Assets\Scripts\ShipRelated\Ammunition.cs" />
+     <Compile Include="Assets\Scripts\ShipRelated\FireControlSystem.cs" />
+     <Compile Include="Assets\Scripts\ShipRelated\IGunTurret.cs" />
+     <Compile Include="Assets\Scripts\ShipRelated\IMovingAlgorithm.cs" />
+     <Compile Include="Assets\Scripts\ShipRelated\IShip.cs" />
      <None Include="Assets\Standard Assets\Projectors\Guidelines.txt" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Multiply Culled.shader" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />
