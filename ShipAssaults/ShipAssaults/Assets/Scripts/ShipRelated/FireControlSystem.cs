@@ -14,7 +14,7 @@ public class FireControlSystem : MonoBehaviour {
 	public float fireRate;
 	public float turnSpeed=1;
 	public float firePower;
-	public GameObject[] projectileTypes;
+	//public GameObject[] projectileTypes;
 	public GameObject [] ammunitionTypes;
 
 	// Use this for initialization
@@ -25,7 +25,7 @@ public class FireControlSystem : MonoBehaviour {
 		this.setTurnSpeed(this.turnSpeed);
 		this.setFireRange(this.fireRange);
 		this.setFirePower(this.firePower);
-		this.setProjectileTypes(projectileTypes);
+		//this.setProjectileTypes(projectileTypes);
 		this.setAmmunitionTypes (ammunitionTypes);
 		this.setUsedAmmunition(0);
 		this.setFireAngle(this.fireAngle);
@@ -42,18 +42,18 @@ public class FireControlSystem : MonoBehaviour {
 
 	void setUsedAmmunition(int newAmmunition) {
 		foreach(IGunTurret turret in turrets) {
-			if(turret.getProjectileTypesSize()>newAmmunition){
+			if(turret.getAmmunitionTypesSize()>newAmmunition){
 				turret.setUsedAmmunition(newAmmunition);
 			}
 		}
 	}
 
 
-	void setProjectileTypes(GameObject[] newProjectileTypes) {
+	/*void setProjectileTypes(GameObject[] newProjectileTypes) {
 		foreach(IGunTurret turret in turrets) {
 			turret.setProjectileTypes(newProjectileTypes);
 		}
-	}
+	}*/
 
 	void setAmmunitionTypes(GameObject[] newAmmunitionTypes) {
 		foreach (IGunTurret turret in turrets) {

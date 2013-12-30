@@ -3,17 +3,22 @@ using System.Collections;
 
 public class FieldInteraction : MonoBehaviour {
 
-	static public float movementStrength = 0.5f;
-	static public float zoomLevel = 0.5f;
+	static public float movementRatio = 0.5f;
+	static public float zoomLevel = 5f;
 	static Camera MainCam;
 	static GameObject MainPlane;
+
+	static bool leftMouseClicked = false;
+	static bool leftMouseDown = false;
 	static bool rightMouseDown = false;
-	static Vector3 lastMousePosition = new Vector3(0,0, 0);
+	static bool rightMouseClicked = false;
+
+	static Vector3 lastMousePosition = new Vector3(-1000.0f, -1000.0f, 0.0f);
 
 	static FieldInteraction instance = null; 
 
-	static public float maxCamZoom = -15.5f;
-	static public float minCamZoom = -2.0f;
+	static public float maxCamZoom = -120.0f;
+	static public float minCamZoom = -7.0f;
 
 	public static FieldInteraction get_instance()
 	{
@@ -45,10 +50,15 @@ public class FieldInteraction : MonoBehaviour {
 			MoveCameraRel(0,0,-zoomLevel);
 		}
 
+		leftMouseDown = Input.GetMouseButton (0);
+		leftMouseClicked = Input.GetMouseButtonDown(0);
+
 		rightMouseDown = Input.GetMouseButton (1);
+		rightMouseClicked = Input.GetMouseButtonDown (1);
+
 		Vector3 deltaMouse = lastMousePosition - Input.mousePosition;
 
-		if (Input.GetMouseButtonDown (0)) 
+		if (leftMouseClicked) 
 		{
 			Vector3 hitPoint;
 			bool selected = ObjectSelected(MainPlane,out hitPoint);
@@ -61,7 +71,7 @@ public class FieldInteraction : MonoBehaviour {
 
 		if (rightMouseDown) 
 		{
-			MoveCameraRel(deltaMouse.x*0.1f,deltaMouse.y*0.1f,0);
+			MoveCameraRel(deltaMouse.x*movementRatio,deltaMouse.y*movementRatio,0);
 		}
 
 		lastMousePosition = Input.mousePosition;
@@ -104,7 +114,7 @@ public class FieldInteraction : MonoBehaviour {
 		if (Mathf.Abs(z) >= Mathf.Abs(minCamZoom) && Mathf.Abs(z) <= Mathf.Abs(maxCamZoom)) 
 		{
 			Vector3 camPosition = new Vector3 (x, y, z);
-			MainCam.transform.position = Vector3.Lerp (MainCam.transform.position, camPosition, movementStrength);
+			MainCam.transform.position = Vector3.Lerp (MainCam.transform.position, camPosition, 1.0f);
 		}
 	}
 }

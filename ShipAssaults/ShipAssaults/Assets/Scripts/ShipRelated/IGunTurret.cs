@@ -14,7 +14,7 @@ public class IGunTurret : MonoBehaviour {
 	public float fireAngle;
 
 	public GameObject [] ammunitionTypes;
-	public GameObject[] projectileTypes;
+	//public GameObject[] projectileTypes;
 	public gunBarrel []  gunBarrels;
 
 	
@@ -49,8 +49,12 @@ public class IGunTurret : MonoBehaviour {
 
 	
 
-	public int getProjectileTypesSize() {
+	/*public int getProjectileTypesSize() {
 		return this.projectileTypes.Length;
+	}*/
+
+	public int getAmmunitionTypesSize() {
+		return this.ammunitionTypes.Length;
 	}
 	
 	public void setFireAngle(float newFireAngle) {
@@ -61,9 +65,9 @@ public class IGunTurret : MonoBehaviour {
 		usedAmmunition=newUsedAmmiunition;
 	}
 
-	public void setProjectileTypes(GameObject[] newProjectileTypes) {
+	/*public void setProjectileTypes(GameObject[] newProjectileTypes) {
 		this.projectileTypes=newProjectileTypes;
-	}
+	}*/
 
 	public void setAmmunitionTypes(GameObject[] newAmmunitionTypes) {
 		this.ammunitionTypes = newAmmunitionTypes;
@@ -114,10 +118,10 @@ public class IGunTurret : MonoBehaviour {
 				ammo.targetDistance = Vector3.Distance(transform.position,this.target);
 
 				ammo.Fire();
+			
+      			currentTimes[i]=0;
 
-      			  currentTimes[i]=0;
-
-			    }
+			 }
 
 		}
 
@@ -152,9 +156,9 @@ public class IGunTurret : MonoBehaviour {
 				Debug.DrawRay(transform.position,-fireDirection,Color.green);
 
 		
-			Debug.Log(transform.rotation.eulerAngles.z+" currentAngle");
+			/*Debug.Log(transform.rotation.eulerAngles.z+" currentAngle");
 			Debug.Log(lookRotation.eulerAngles.z+this.fireAngle+" inRangeAngle");
-			Debug.Log(lookRotation.eulerAngles.z+this.fireAngle);
+			Debug.Log(lookRotation.eulerAngles.z+this.fireAngle);*/
 			float inRangeAngle=lookRotation.eulerAngles.z+this.fireAngle;
 			float currentAngle=transform.rotation.eulerAngles.z;
 
