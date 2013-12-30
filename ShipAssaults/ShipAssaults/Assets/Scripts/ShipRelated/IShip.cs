@@ -125,28 +125,13 @@ public abstract class IShip : MonoBehaviour {
 	}
 	
 	protected abstract void AnimateShipMotor();
-
-	protected void CheckSelection()
-	{
-		if (Input.GetMouseButtonDown (0)) 
-		{
-			Vector3 hitPoint;
-			bool selected = FieldInteraction.get_instance().ObjectSelected(gameObject,out hitPoint);
-			if (selected)
-			{
-				//ParticleManager.get_instance().instantiateParticleSystem("SimpleSplash",new Vector3(hitPoint.x,hitPoint.y,0));
-				/*PrefabManager.get_instance().InstantiatePrefab("MiddleClassBattleShip",hitPoint);*/
-			}
-		}
-	}
-
+	
 	// Update is called once per frame
 	protected virtual void Update () {
 		if (moveCommand == true) 
 		{
 			this.PerformMovement ();
 			this.AnimateShipMotor();
-			this.CheckSelection();
 		}
 	}
 }

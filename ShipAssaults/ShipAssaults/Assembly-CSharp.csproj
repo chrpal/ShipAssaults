@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\Manager\PrefabManager.cs" />
      <Compile Include="Assets\Scripts\ShipRelated\Ammunition.cs" />
      <Compile Include="Assets\Scripts\ShipRelated\FireControlSystem.cs" />
+     <Compile Include="Assets\Scripts\ShipRelated\GunBarrel.cs" />
      <Compile Include="Assets\Scripts\ShipRelated\IGunTurret.cs" />
      <Compile Include="Assets\Scripts\ShipRelated\IMovingAlgorithm.cs" />
      <Compile Include="Assets\Scripts\ShipRelated\IShip.cs" />

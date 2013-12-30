@@ -35,7 +35,7 @@ public class Ammunition : MonoBehaviour {
 
 			this.lifeTime += Random.value*2*this.standardLifeTimeDeviation-this.standardLifeTimeDeviation;
 
-			gameObject.rigidbody.AddForce (this.targetDirection * this.firePower, ForceMode.Impulse);
+			gameObject.rigidbody.AddForce (targetDirection * this.firePower, ForceMode.Impulse);
 		} 
 		else 
 		{

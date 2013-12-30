@@ -8,6 +8,7 @@ public class FireControlSystem : MonoBehaviour {
 
 	public GameObject target = null;
 
+	public float fireAngle;
 	public float fieldOfViewRadius=30;
 	public float fireRange;
 	public float fireRate;
@@ -27,6 +28,16 @@ public class FireControlSystem : MonoBehaviour {
 		this.setProjectileTypes(projectileTypes);
 		this.setAmmunitionTypes (ammunitionTypes);
 		this.setUsedAmmunition(0);
+		this.setFireAngle(this.fireAngle);
+	}
+
+
+	void setFireAngle(float newAngle) {
+		foreach(IGunTurret turret in turrets) {
+
+			turret.setFireAngle(newAngle);
+
+		}
 	}
 
 	void setUsedAmmunition(int newAmmunition) {
@@ -95,6 +106,7 @@ public class FireControlSystem : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+
 		if (target != null) 
 		{
 			this.setTarget (target.transform.position);

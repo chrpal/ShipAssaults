@@ -3,23 +3,17 @@ using System.Collections;
 
 public class FieldInteraction : MonoBehaviour {
 
-	static public float movementRatio = 0.5f;
-	static public float zoomLevel = 2.0f;
+	static public float movementStrength = 0.5f;
+	static public float zoomLevel = 0.5f;
 	static Camera MainCam;
 	static GameObject MainPlane;
 	static bool rightMouseDown = false;
-	static bool leftMouseDown = false;
-	static bool leftMouseClicked = false;
-	static bool mouseMoved = false;
-	static Vector3 lastMousePosition = new Vector3(0, 0, 0);
-
-	static Vector3 selectionRectStartPosition = new Vector3(-1000.0f, -1000.0f, 0.0f);
+	static Vector3 lastMousePosition = new Vector3(0,0, 0);
 
 	static FieldInteraction instance = null; 
 
-	static public float maxCamZoom = -120.0f;
-	static public float minCamZoom = -15.0f;
-
+	static public float maxCamZoom = -15.5f;
+	static public float minCamZoom = -2.0f;
 
 	public static FieldInteraction get_instance()
 	{
@@ -41,10 +35,6 @@ public class FieldInteraction : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-		//Check if mouse as moved
-		mouseMoved = (lastMousePosition.Equals (Input.mousePosition) == false);
-
 		if (Input.GetAxis ("Mouse ScrollWheel") < 0) 
 		{
 			MoveCameraRel(0,0,zoomLevel);
@@ -55,13 +45,10 @@ public class FieldInteraction : MonoBehaviour {
 			MoveCameraRel(0,0,-zoomLevel);
 		}
 
-		leftMouseDown = Input.GetMouseButton (0);
-		leftMouseClicked = Input.GetMouseButtonDown (0);
 		rightMouseDown = Input.GetMouseButton (1);
-
 		Vector3 deltaMouse = lastMousePosition - Input.mousePosition;
 
-		/*if (leftMouseClicked) 
+		if (Input.GetMouseButtonDown (0)) 
 		{
 			Vector3 hitPoint;
 			bool selected = ObjectSelected(MainPlane,out hitPoint);
@@ -70,37 +57,11 @@ public class FieldInteraction : MonoBehaviour {
 				//ParticleManager.get_instance().instantiateParticleSystem("SimpleSplash",new Vector3(hitPoint.x,hitPoint.y,0));
 				PrefabManager.get_instance().InstantiatePrefab("MiddleClassBattleShip",hitPoint);
 			}
-		}*/
-
-		if (leftMouseDown)
-		{
-			if (selectionRectStartPosition.x == -1000.0f)
-			{
-				selectionRectStartPosition.x = Input.mousePosition.x;
-				selectionRectStartPosition.y = Input.mousePosition.y;
-			}
-		} else 
-		{
-			selectionRectStartPosition.x = -1000.0f;
-			selectionRectStartPosition.y = -1000.0f;
-		}
-
-		//Make selection rectangle
-		if (leftMouseDown && mouseMoved)
-		{
-			Texture2D selectionRectTex = (Texture2D)Resources.Load<Texture2D> ("Images/SelectionRectangle");
-			Rect r = new Rect(selectionRectStartPosition.x,selectionRectStartPosition.y,
-			                  Input.mousePosition.x-selectionRectStartPosition.x,
-			                  Input.mousePosition.y-selectionRectStartPosition.y);
-			GUI.DrawTexture(r,
-			                selectionRectTex,
-			                ScaleMode.ScaleToFit,
-			                true);
 		}
 
 		if (rightMouseDown) 
 		{
-			MoveCameraRel(deltaMouse.x*movementRatio,deltaMouse.y*movementRatio,0);
+			MoveCameraRel(deltaMouse.x*0.1f,deltaMouse.y*0.1f,0);
 		}
 
 		lastMousePosition = Input.mousePosition;
@@ -143,7 +104,7 @@ public class FieldInteraction : MonoBehaviour {
 		if (Mathf.Abs(z) >= Mathf.Abs(minCamZoom) && Mathf.Abs(z) <= Mathf.Abs(maxCamZoom)) 
 		{
 			Vector3 camPosition = new Vector3 (x, y, z);
-			MainCam.transform.position = Vector3.Lerp (MainCam.transform.position, camPosition, 1.0f);
+			MainCam.transform.position = Vector3.Lerp (MainCam.transform.position, camPosition, movementStrength);
 		}
 	}
 }
