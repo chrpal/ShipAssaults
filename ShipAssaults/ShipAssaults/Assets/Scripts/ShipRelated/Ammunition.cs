@@ -11,6 +11,9 @@ public class Ammunition : MonoBehaviour {
 	public float standardTargetDistanceDeviation = 0.0f;
 
 	public bool intelligentProjectile = false;
+	public GameObject[] waterExplosions;
+	public GameObject[] shipExplosions;
+	public Transform rayCastPosition;
 
 	public float standardAngleDeviationDeg = 0.0f;
 	public Vector3 targetPosition;
@@ -81,8 +84,28 @@ public class Ammunition : MonoBehaviour {
 
 		if (explode == true)
 		{
+            
+			RaycastHit hit;
+			Physics.Raycast(this.transform.position+new Vector3(0,0,-5),this.transform.forward,out hit);
+
+			//Debug.DrawRay(transform.position,this.transform.forward,Color.red);
+			//Debug.Log(hit.collider.name);
+
+			if(hit.collider.name=="Water") {
+				if(waterExplosions.Length!=0)
+					Instantiate(waterExplosions[Random.Range(0,waterExplosions.Length-1)],transform.position,Quaternion.Euler(180,0,0));
+
+			}
+			else {
+				if(shipExplosions.Length!=0)
+
+					Instantiate(shipExplosions[Random.Range(0,shipExplosions.Length-1)],hit.point,Quaternion.Euler(180,0,0));
+				Debug.Log("Hit");
+			}
+
 			//explode = true;
 			Destroy(gameObject);
+
 		}
 	}
 
