@@ -27,6 +27,7 @@ public class Ammunition : MonoBehaviour {
 		if (this.intelligentProjectile == false) 
 		{
 			float angle = Vector3.Angle(new Vector3(1.0f, 0.0f, 0.0f),this.targetDirection);
+			Random.seed = (int)Time.realtimeSinceStartup;
 			angle += Random.value*2*this.standardAngleDeviationDeg - this.standardAngleDeviationDeg;
 			angle *= Mathf.PI/180;
 
@@ -34,6 +35,7 @@ public class Ammunition : MonoBehaviour {
 			                                   Mathf.Sin(angle) * this.targetDirection.magnitude, 
 			                                   0.0f);
 
+			Random.seed = (int)Time.realtimeSinceStartup;
 			this.targetDistance += Random.value*2*this.standardTargetDistanceDeviation - this.standardTargetDistanceDeviation;
 			this.targetPosition = new Vector3(Mathf.Cos (angle)*this.targetDistance,
 			                                  Mathf.Sin (angle)*this.targetDistance,
@@ -45,6 +47,7 @@ public class Ammunition : MonoBehaviour {
 			} 
 			else
 			{
+				Random.seed = (int)Time.realtimeSinceStartup;
 				float lifeTimeDeviation = this.lifeTime * this.standardLifeTimeDeviationRatio;
 				this.lifeTime += Random.value*2*lifeTimeDeviation-lifeTimeDeviation;
 			}
