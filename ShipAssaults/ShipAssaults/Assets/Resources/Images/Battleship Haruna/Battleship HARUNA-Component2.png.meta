@@ -57,18 +57,18 @@ TextureImporter:
     - name: Battleship HARUNA-Component2_1
       rect:
         serializedVersion: 2
-        x: 753
+        x: 814
         y: 96
-        width: 280
+        width: 219
         height: 118
       alignment: 9
       pivot: {x: .66896385, y: .511455357}
     - name: Battleship HARUNA-Component2_2
       rect:
         serializedVersion: 2
-        x: 434
+        x: 496
         y: 98
-        width: 279
+        width: 217
         height: 117
       alignment: 9
       pivot: {x: .664724469, y: .500000656}
@@ -77,7 +77,7 @@ TextureImporter:
         serializedVersion: 2
         x: 1580
         y: 95
-        width: 279
+        width: 217
         height: 122
       alignment: 9
       pivot: {x: .32138148, y: .500000238}
@@ -117,5 +117,14 @@ TextureImporter:
         height: 73
       alignment: 9
       pivot: {x: .514072657, y: .392725289}
+    - name: Battleship HARUNA-Component2_8
+      rect:
+        serializedVersion: 2
+        x: 1785
+        y: 163
+        width: 73
+        height: 11
+      alignment: 0
+      pivot: {x: .5, y: .5}
   spritePackingTag: 
   userData: 

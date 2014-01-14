@@ -2,30 +2,22 @@
 using System.Collections;
 
 public class IGunTurret : MonoBehaviour {
-
-	[System.Serializable]
-	public class gunBarrel {
-		public GameObject barrel;
-		public Transform projectileSpawnPoint;
-
-	}
-
-
+	
 	public float fireAngle;
 
 	public GameObject [] ammunitionTypes;
 	//public GameObject[] projectileTypes;
-	public gunBarrel []  gunBarrels;
+	public GameObject []  gunBarrels;
 
 	
 	public Transform [] projectileSpawnPoints;
 	public int usedAmmunition=0;
 
 
-	public float fieldOfViewRadius=30;
-	public float fireRange;
-	public float fireRate;
-	public float turnSpeed=1;
+	protected float fieldOfViewRadius=30;
+	protected float fireRange;
+	protected float fireRate;
+	protected float turnSpeed=1;
 
 
 	private Vector3 cannonStartAxis= new Vector3(1,0,0);
@@ -33,7 +25,7 @@ public class IGunTurret : MonoBehaviour {
 	private Vector3 fireDirection;
 	private Quaternion lookRotation;
 	private Quaternion startRotaton;
-	public float firePower=50;
+	//public float firePower=50;
 
 	public bool validTarget = false;
     
@@ -44,7 +36,6 @@ public class IGunTurret : MonoBehaviour {
 		//this.startRotaton=transform.rotation;
 		currentTimes=new float[projectileSpawnPoints.Length];
 		this.startRotaton=this.transform.rotation;
-
 	}
 
 	
@@ -73,9 +64,9 @@ public class IGunTurret : MonoBehaviour {
 		this.ammunitionTypes = newAmmunitionTypes;
 	}
 
-	public void setFirePower(float newFirePower) {
+	/*public void setFirePower(float newFirePower) {
 		this.firePower=newFirePower;
-	}
+	}*/
 
 	public void setTarget(Vector3 newTarget) {
 		target=newTarget;
@@ -104,11 +95,42 @@ public class IGunTurret : MonoBehaviour {
 	}
 
 	 
-	  void Fire() {
-			for(int i=0;i<projectileSpawnPoints.Length;i++){
-		
-				currentTimes[i]+=Time.deltaTime;
-			    if(currentTimes[i]>this.fireRate+Random.value){
+	public virtual void Fire() {
+
+		int currentTimesIndex = 0;
+		if (this.gunBarrels == null)
+		{
+			return ;
+		}
+		foreach (GameObject barrel in this.gunBarrels) 
+		{
+			this.currentTimes[currentTimesIndex] += Time.deltaTime;
+			if (this.currentTimes[currentTimesIndex]>this.fireRate+Random.value)
+			{
+				//Let the gun barrel "fire" and thus animate
+				IGunBarrel gbarrel = (IGunBarrel)barrel.GetComponent<IGunBarrel>();
+				if (gbarrel != null)
+				{
+					gbarrel.Fire();
+				}
+
+				//Fire with respect to loaded ammunition
+				GameObject ammoTemplate = this.ammunitionTypes[this.usedAmmunition];
+				GameObject ammoObj = PrefabManager.get_instance().InstantiatePrefab(ammoTemplate,gbarrel.projectileSpawnPoint.position);
+				Ammunition ammo = (Ammunition)ammoObj.GetComponent<Ammunition>();
+				ammo.targetPosition = this.target;
+				ammo.targetDirection = -transform.right;
+				ammo.targetDistance = Vector3.Distance(transform.position,this.target);
+				ammo.Fire();
+
+				this.currentTimes[currentTimesIndex] = 0;
+			}
+			currentTimesIndex++;
+		}
+
+		/*for(int i=0;i<projectileSpawnPoints.Length;i++){
+			currentTimes[i]+=Time.deltaTime;
+		    if(currentTimes[i]>this.fireRate+Random.value){
 
 				GameObject ammoTemplate = this.ammunitionTypes[this.usedAmmunition];
 				GameObject ammoObj = PrefabManager.get_instance().InstantiatePrefab(ammoTemplate,projectileSpawnPoints[i].position);
@@ -116,18 +138,40 @@ public class IGunTurret : MonoBehaviour {
 				ammo.targetPosition = this.target;
 				ammo.targetDirection = -transform.right;
 				ammo.targetDistance = Vector3.Distance(transform.position,this.target);
-
 				ammo.Fire();
-			
+
       			currentTimes[i]=0;
-
 			 }
-
-		}
+		}*/
 
 	}
 
+	public virtual void RotateToNeutralDirection()
+	{
+		//lookRotation = Quaternion.AngleAxis(0,new Vector3(0,0,1)); // Quaternion.FromToRotation (transform.right,cannonStartAxis);
+		transform.localRotation = Quaternion.Lerp(transform.localRotation, this.startRotaton, turnSpeed*Time.deltaTime);
+		Debug.DrawRay(transform.position,transform.right,Color.red);
+		Debug.DrawRay(transform.position,cannonStartAxis,Color.green);
+	}
 
+	public virtual void RotateToTargetDirection()
+	{
+		lookRotation = Quaternion.FromToRotation (cannonStartAxis,-fireDirection);
+		transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, turnSpeed*Time.deltaTime);
+		Debug.DrawRay(transform.position,cannonStartAxis,Color.red);
+		Debug.DrawRay(transform.position,-fireDirection,Color.green);
+		
+		
+		/*Debug.Log(transform.rotation.eulerAngles.z+" currentAngle");
+			Debug.Log(lookRotation.eulerAngles.z+this.fireAngle+" inRangeAngle");
+			Debug.Log(lookRotation.eulerAngles.z+this.fireAngle);*/
+		float inRangeAngle=lookRotation.eulerAngles.z+this.fireAngle;
+		float currentAngle=transform.rotation.eulerAngles.z;
+		
+		if(fireDirection.magnitude<fireRange && (inRangeAngle>currentAngle && currentAngle>inRangeAngle-2*fireAngle)) {
+			this.Fire();
+		}
+	}
 
 	// Update is called once per frame
 	void Update () {
@@ -139,33 +183,10 @@ public class IGunTurret : MonoBehaviour {
 
 
 			if (fireDirection.magnitude>fieldOfViewRadius || this.validTarget == false) {
-
-				//lookRotation = Quaternion.AngleAxis(0,new Vector3(0,0,1)); // Quaternion.FromToRotation (transform.right,cannonStartAxis);
-				transform.localRotation = Quaternion.Lerp(transform.localRotation, this.startRotaton, turnSpeed*Time.deltaTime);
-			    
-				Debug.DrawRay(transform.position,transform.right,Color.red);
-
-				Debug.DrawRay(transform.position,cannonStartAxis,Color.green);
-
-
+				this.RotateToNeutralDirection();
 			}
 			else {
-				lookRotation = Quaternion.FromToRotation (cannonStartAxis,-fireDirection);
-				transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, turnSpeed*Time.deltaTime);
-				Debug.DrawRay(transform.position,cannonStartAxis,Color.red);
-				Debug.DrawRay(transform.position,-fireDirection,Color.green);
-
-		
-			/*Debug.Log(transform.rotation.eulerAngles.z+" currentAngle");
-			Debug.Log(lookRotation.eulerAngles.z+this.fireAngle+" inRangeAngle");
-			Debug.Log(lookRotation.eulerAngles.z+this.fireAngle);*/
-			float inRangeAngle=lookRotation.eulerAngles.z+this.fireAngle;
-			float currentAngle=transform.rotation.eulerAngles.z;
-
-			if(fireDirection.magnitude<fireRange && (inRangeAngle>currentAngle && currentAngle>inRangeAngle-2*fireAngle)) {
-					this.Fire();
-				}
-
+			this.RotateToTargetDirection();
 			}
 	}
 }

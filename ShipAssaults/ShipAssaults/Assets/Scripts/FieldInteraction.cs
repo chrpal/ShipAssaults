@@ -34,7 +34,7 @@ public class FieldInteraction : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		MainCam = GameObject.Find ("MainCam").camera;
-		MainPlane = GameObject.Find ("MainPlane");
+		MainPlane = GameObject.Find ("Water");
 		lastMousePosition = Input.mousePosition;
 	}
 	

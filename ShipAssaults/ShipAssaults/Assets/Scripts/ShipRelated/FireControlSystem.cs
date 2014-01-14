@@ -13,7 +13,7 @@ public class FireControlSystem : MonoBehaviour {
 	public float fireRange;
 	public float fireRate;
 	public float turnSpeed=1;
-	public float firePower;
+	//public float firePower;
 	//public GameObject[] projectileTypes;
 	public GameObject [] ammunitionTypes;
 
@@ -24,7 +24,7 @@ public class FireControlSystem : MonoBehaviour {
 		this.setFireRate(this.fireRate);
 		this.setTurnSpeed(this.turnSpeed);
 		this.setFireRange(this.fireRange);
-		this.setFirePower(this.firePower);
+		//this.setFirePower(this.firePower);
 		//this.setProjectileTypes(projectileTypes);
 		this.setAmmunitionTypes (ammunitionTypes);
 		this.setUsedAmmunition(0);
@@ -61,11 +61,11 @@ public class FireControlSystem : MonoBehaviour {
 		}
 	}
 
-	void setFirePower(float firePower) {
+	/*void setFirePower(float firePower) {
 		foreach(IGunTurret turret in turrets) {
 			turret.setFirePower(firePower);
 		}	
-	}
+	}*/
 
 	void setTarget(Vector3 newTarget) {
 		foreach(IGunTurret turret in turrets) {
