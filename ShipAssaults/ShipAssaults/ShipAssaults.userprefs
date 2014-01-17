@@ -1,12 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ShipRelated\IGunBarrel.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ShipRelated\IGunTurret.cs">
     <Files>
       <File FileName="Assets\Scripts\FieldInteraction.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\ShipRelated\FireControlSystem.cs" Line="66" Column="24" />
+      <File FileName="Assets\Scripts\ShipRelated\FireControlSystem.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\ShipRelated\Ammunition.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\ShipRelated\IGunTurret.cs" Line="111" Column="28" />
-      <File FileName="Assets\Scripts\ShipRelated\IGunBarrel.cs" Line="47" Column="4" />
+      <File FileName="Assets\Scripts\ShipRelated\IGunTurret.cs" Line="111" Column="68" />
+      <File FileName="Assets\Scripts\ShipRelated\IGunBarrel.cs" Line="23" Column="18" />
+      <File FileName="Assets\Scripts\ShipRelated\Barrels\TubeBarrel.cs" Line="20" Column="4" />
+      <File FileName="Assets\Scripts\ShipRelated\IMovingAlgorithm.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
