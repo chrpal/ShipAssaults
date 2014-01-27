@@ -37,6 +37,11 @@ public class FieldInteraction : MonoBehaviour {
 		MainPlane = GameObject.Find ("Water");
 		lastMousePosition = Input.mousePosition;
 	}
+
+	void OnGUI()
+	{
+		this.DrawQuad (new Rect (0, 0, 50, 50), Color.green);
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -116,5 +121,13 @@ public class FieldInteraction : MonoBehaviour {
 			Vector3 camPosition = new Vector3 (x, y, z);
 			MainCam.transform.position = Vector3.Lerp (MainCam.transform.position, camPosition, 1.0f);
 		}
+	}
+
+	void DrawSelectionRect(Rect position, Color color) {
+		Texture2D texture = new Texture2D(1, 1);
+		texture.SetPixel(0,0,color);
+		texture.Apply();
+		GUI.skin.box.normal.background = texture;
+		GUI.Box(position, GUIContent.none);
 	}
 }
